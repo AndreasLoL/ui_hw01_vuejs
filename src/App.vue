@@ -7,6 +7,12 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import Vue from 'vue'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default-dark.css'
+import VueMaterial from 'vue-material'
+
+Vue.use(VueMaterial)
 
 export default {
   name: 'App',
@@ -22,7 +28,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
   margin-top: 60px;
 }
 </style>
