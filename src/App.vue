@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <HelloWorld/>
   </div>
 </template>
@@ -9,11 +8,11 @@
 import HelloWorld from './components/HelloWorld'
 import Vue from 'vue'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default-dark.css'
+import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
+import StepOneContainer from './components/StepOneContainer'
 
 Vue.use(VueMaterial)
-
 export default {
   name: 'App',
   components: {
@@ -22,13 +21,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
-  margin-top: 60px;
+  color: black;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>
