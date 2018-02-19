@@ -148,7 +148,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="md-layout-item md-size-100 md-small-size-100" v-if="form.existUnderAgeChildren">
+      <md-card class="md-layout-item md-size-100 md-small-size-100" v-if="form.existUnderAgeChildren && form.dataOnlyAboutMe">
         <md-card-header>
           <div class="md-title">ALAEALISE LAPSE (LASTE) TEISE HOOLDUSÕIGUSLIKU VANEMA NÕUSOLEK</div>
         </md-card-header>
