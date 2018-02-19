@@ -137,6 +137,49 @@
         </md-card-content>
       </md-card>
 
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
+        <md-card-header>
+          <div class="md-title">ALAEALISE LAPSE (LASTE) TEISE HOOLDUSÕIGUSLIKU VANEMA NÕUSOLEK</div>
+        </md-card-header>
+
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('firstName')">
+                <label for="first-name">Eesnimi</label>
+                <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.otherParentsFirstName" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.otherParentFirstName.required">The first name is required</span>
+                <span class="md-error" v-else-if="!$v.form.otherParentsFirstName.minlength">Invalid first name</span>
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('lastName')">
+                <label for="last-name">Perekonnanimi</label>
+                <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="form.otherParentLastName" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.otherParentLastName.required">The last name is required</span>
+                <span class="md-error" v-else-if="!$v.form.otherParentLastName.minlength">Invalid last name</span>
+              </md-field>
+            </div>
+
+
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('idcode')">
+                <label for="idcode">Isikukood</label>
+                <md-input type="number" name="idcode" id="idcode" autocomplete="idcode" v-model="form.otherParentIdCode" :disabled="sending" />
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100">
+              <md-progress-bar md-mode="indeterminate" v-if="sending" />
+            </div>
+          </div>
+          </div>
+
+        </md-card-content>
+      </md-card>
+
 
     </form>
   </div>
@@ -166,6 +209,9 @@
         phone: null,
         address: null,
         dataOnlyAboutMe: true,
+        otherParentFirstName:null,
+        otherParentLastName:null,
+        otherParentIdCode:null,
         owners: [
           {firstName: null, lastName: null, idcode: null}
         ]
@@ -181,6 +227,14 @@
           minLength: minLength(3)
         },
         lastName: {
+          required,
+          minLength: minLength(3)
+        },
+        otherParentFirstName: {
+          required,
+          minLength: minLength(3)
+        },
+        otherParentLastName: {
           required,
           minLength: minLength(3)
         },
@@ -207,6 +261,8 @@
         this.form.age = null
         this.form.gender = null
         this.form.email = null
+        this.form.otherParentsFirstName = null
+        this.form.otherParentsLastName = null
       },
       saveUser () {
         this.sending = true
