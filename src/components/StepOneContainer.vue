@@ -71,16 +71,6 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('firstName')">
-                <label for="first-name">Eesnimi</label>
-                <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName"
-                          :disabled="sending"/>
-                <span class="md-error" v-if="!$v.form.firstName.required">The first name is required</span>
-                <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first name</span>
-              </md-field>
-            </div>
-
-            <div class="md-layout-item md-small-size-100">
               <custom-auto-complete></custom-auto-complete>
             </div>
 
