@@ -8,10 +8,8 @@
         </md-step>
 
         <md-step id="second" md-label="Second Step" :md-editable="false" :md-done.sync="second">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+          <step-two-container></step-two-container>
+          <md-button class="md-raised md-primary" v-on:click="setDone('second', 'third')">Edasi</md-button>
         </md-step>
 
         <md-step id="third" md-label="Third Step" :md-editable="false" :md-done.sync="third">
@@ -25,6 +23,7 @@
 <script>
 
 import StepOneContainer from "./StepOneContainer";
+import StepTwoContainer from "./StepTwoContainer";
 export default {
   name: 'HelloWorld',
   data: () => ({
@@ -43,7 +42,8 @@ export default {
     },
   },
   components: {
-    'step-one-container': StepOneContainer
+    'step-one-container': StepOneContainer,
+    'step-two-container': StepTwoContainer
   }
 }
 </script>
