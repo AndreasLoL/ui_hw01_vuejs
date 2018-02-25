@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-element">
     <md-autocomplete v-model="address" :md-options="this.addresses" @md-opened="getAddresses" @md-changed="getAddresses" @md-selected="selected">
-      <label>Uus aadress</label>
+      <label>{{ label }}</label>
 
       <template slot="md-autocomplete-item" slot-scope="{ item, term }">
         <md-highlight-text :md-term="term">{{ item.name }}</md-highlight-text>
@@ -18,6 +18,7 @@
 
   export default {
     name: 'CustomAutoComplete',
+    props: ["label"],
     data: () => ({
       addresses: [],
       address: "",

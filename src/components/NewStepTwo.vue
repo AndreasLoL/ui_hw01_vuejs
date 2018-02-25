@@ -1,59 +1,68 @@
 <template>
   <div>
-    <form novalidate class="md-layout">
+    <div class="segment-title">
+      Uus elukoht
+    </div>
+    <div class="segment">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Uus elukoht</div>
-        </md-card-header>
-
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <custom-auto-complete></custom-auto-complete>
+              <custom-auto-complete label="Uue elukoha aadress"></custom-auto-complete>
             </div>
           </div>
 
-          <div>
+          <div class="start-content">
             <md-checkbox v-model="form.dataAboutMe">Esitan uue elukoha enda kohta</md-checkbox>
           </div>
 
-          <div>
+          <div class="start-content">
             <md-checkbox v-model="form.dataAboutOthers" v-on:change="dataAboutOthersChange">Esitan uue elukoha teis(te)e kohta</md-checkbox>
-          </div>
-
-          <md-divider></md-divider>
-
-          <div>
-            <md-checkbox v-model="form.liveElsewhere">Elan ka mujal kui eelnevalt nimetatud elukohas</md-checkbox>
-          </div>
-
-          <div v-if="form.liveElsewhere">
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <custom-auto-complete></custom-auto-complete>
-              </div>
-            </div>
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-datepicker v-model="form.dateFrom">
-                  <label>Kehtib alates</label>
-                </md-datepicker>
-              </div>
-
-              <div class="md-layout-item md-small-size-100">
-                <md-datepicker v-model="form.dateTo">
-                  <label>Kuni</label>
-                </md-datepicker>
-              </div>
-            </div>
-            <span class="md-helper-text">Täita juhul, kui aadressi kehtivuse alguse kuupäev on tulevikus või kui on teada, millal kehtivus lõppeb</span>
           </div>
 
         </md-card-content>
       </md-card>
+    </div>
 
-    </form>
+    <div class="segment-title">
+      Muu elukoht
+    </div>
+    <div class="segment">
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
+        <md-card-content>
+          <div class="start-content wrapper">
+            <md-checkbox v-model="form.liveElsewhere">Elan ka mujal kui eelnevalt nimetatud elukohas</md-checkbox>
+          </div>
+
+          <transition name="fade" mode="out-in">
+            <div v-if="form.liveElsewhere" class="wrapper">
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <custom-auto-complete label="Täpne sideaadress"></custom-auto-complete>
+                </div>
+              </div>
+
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-datepicker v-model="form.dateFrom">
+                    <label>Kehtib alates</label>
+                  </md-datepicker>
+                </div>
+
+                <div class="md-layout-item md-small-size-100">
+                  <md-datepicker v-model="form.dateTo">
+                    <label>Kuni</label>
+                  </md-datepicker>
+                </div>
+              </div>
+              <span class="md-helper-text">Täita juhul, kui aadressi kehtivuse alguse kuupäev on tulevikus või kui on teada, millal kehtivus lõppeb</span>
+            </div>
+          </transition>
+
+          <md-button class="md-raised md-primary" v-on:click="validateAndNext">Edasi</md-button>
+        </md-card-content>
+      </md-card>
+    </div>
   </div>
 </template>
 
@@ -85,14 +94,8 @@
       lastUser: null
     }),
     methods: {
-      getValidationClass(fieldName) {
-        const field = this.$v.form[fieldName]
-
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
-        }
+      validateAndNext() {
+        this.$emit('complete');
       },
       dataAboutOthersChange() {
         this.$emit('others', "dataAboutOthers", this.form.dataAboutOthers);

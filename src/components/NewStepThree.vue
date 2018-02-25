@@ -1,16 +1,13 @@
 <template>
   <div>
-    <form novalidate class="md-layout">
+    <div class="segment-title">
+      Ruumi kasutamine
+    </div>
+    <div class="segment">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Õigused</div>
-        </md-card-header>
-
         <md-card-content>
           <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-
-            </div>
+            <div class="md-layout-item md-small-size-100"></div>
           </div>
 
           <md-list>
@@ -21,49 +18,30 @@
               <md-radio v-model="form.permission" value="1">Lisan üürilepingu</md-radio>
             </md-list-item>
             <md-list-item>
-               <md-radio v-model="form.permission" value="2">Ruumi kasutamise muu alus</md-radio>
+              <md-radio v-model="form.permission" value="2">Ruumi kasutamise muu alus</md-radio>
             </md-list-item>
             <md-list-item>
               <md-radio v-model="form.permission" value="3">Ruumi omanik annab elukohateatele nõusoleku</md-radio>
             </md-list-item>
           </md-list>
 
-          <div v-if="form.permission === '3'">
-            Ruumi omaniku nõusolek
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label for="first-name">Eesnimi</label>
-                  <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName"
-                            :disabled="sending"/>
-                </md-field>
-              </div>
-
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label for="last-name">Perekonnanimi</label>
-                  <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="form.lastName"
-                            :disabled="sending"/>
-                </md-field>
-              </div>
-            </div>
-            <div class="md-layout md-gutter">
+          <transition name="fade" mode="out-in">
+            <div v-if="form.permission === '3' || form.permission === '1'" class="wrapper">
               <div class="md-layout md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="idcode">Isikukood</label>
-                    <md-input name="idcode" id="idcode" autocomplete="email" v-model="form.idcode" :disabled="sending"/>
-                  </md-field>
-                </div>
-                <div class="md-layout-item md-small-size-100"></div>
+                <md-field>
+                  <label v-if="form.permission === '3'">Ruumi omaniku nõusolek (.bdoc)</label><label v-if="form.permission === '1'">Üürileping</label>
+                  <md-file v-model="files"/>
+                </md-field>
               </div>
+
             </div>
-          </div>
+          </transition>
+
+          <md-button class="md-raised md-primary" v-on:click="validateAndNext">Edasi</md-button>
         </md-card-content>
       </md-card>
+    </div>
 
-    </form>
   </div>
 </template>
 
@@ -88,23 +66,17 @@
         other: "",
         firstName: "",
         lastName: "",
-        idcode: ""
+        idcode: "",
+        files: null
       },
       userSaved: false,
       sending: false,
       lastUser: null
     }),
     methods: {
-      getValidationClass(fieldName) {
-        const field = this.$v.form[fieldName]
-
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
-        }
-      },
-
+      validateAndNext() {
+        this.$emit('complete');
+      }
     },
     components: {
       'custom-auto-complete': CustomAutoComplete

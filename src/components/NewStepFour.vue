@@ -1,66 +1,72 @@
 <template>
   <div>
-    <form novalidate class="md-layout">
-      <md-card class="md-layout-item md-size-100 md-small-size-100">
-        <md-card-header>
-          <div class="md-title"><span v-if="data_about_others">Teised isikud</span><span v-else>Elukohateatele lisatavad dokumendid</span></div>
-        </md-card-header>
-
+    <md-button class="md-raised md-primary" v-on:click="validateAndNext">Esita taotlus</md-button>
+    <div class="segment-title" v-if="data_about_others">Teised isikud</div>
+    <div class="segment">
+      <md-card class="md-layout-item md-size-100 md-small-size-100" v-if="data_about_others">
         <md-card-content>
           <div class="users" v-for="(row, index) in form.users" v-if="data_about_others">
             <div>
-              <md-subheader>{{index + 1}}.</md-subheader>
-              <div class="md-layout md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="first-name">Eesnimi</label>
-                    <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="row.firstName"
-                              :disabled="sending"/>
-                  </md-field>
+              <div class="wrapper">
+                <hr class="hr-text" :data-content="(index + 1) + '. isik'">
+                <div class="md-layout md-gutter">
+                  <div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label for="first-name">Eesnimi</label>
+                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="row.firstName"
+                                :disabled="sending"/>
+                    </md-field>
+                  </div>
+
+
+                  <div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label for="last-name">Perekonnanimi</label>
+                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="row.lastName"
+                                :disabled="sending"/>
+                    </md-field>
+                  </div>
                 </div>
 
+                <div class="md-layout md-gutter">
+                  <div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label for="idcode">Isikukood</label>
+                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model="row.idcode"
+                                :disabled="sending"/>
+                    </md-field>
+                  </div>
 
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="last-name">Perekonnanimi</label>
-                    <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="row.lastName"
-                              :disabled="sending"/>
-                  </md-field>
+                  <div class="md-layout-item md-small-size-100 start-content"></div>
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="idcode">Isikukood</label>
-                    <md-input name="idcode" id="idcode" autocomplete="id-code" v-model="row.idcode"
-                              :disabled="sending"/>
-                  </md-field>
-                </div>
-
-                <div class="md-layout-item md-small-size-100">
+              <div>
+                <div class="start-content">
                   <md-checkbox v-model="row.underage">Alaealine</md-checkbox>
                 </div>
               </div>
 
-              <div class="start-content">
-                <md-checkbox v-model="row.fromOutside">Saabun välismaalt</md-checkbox>
-              </div>
-
-              <div class="md-layout md-gutter" v-if="row.fromOutside">
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="foreign_home">Eelmine välismaa elukoht</label>
-                    <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="row.foreignHome" :disabled="sending"/>
-                  </md-field>
+              <div>
+                <div class="start-content">
+                  <md-checkbox v-model="row.fromOutside">Saabub välismaalt</md-checkbox>
                 </div>
 
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="foreign_code">Välisriigi isikukood olemasolul</label>
-                    <md-input type="number" id="foreign_code" name="foreign_code" autocomplete="foreign-home" v-model="row.foreignCode"
-                              :disabled="sending"/>
-                  </md-field>
+                <div class="md-layout md-gutter wrapper" v-if="row.fromOutside">
+                  <div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label for="foreign_home">Eelmine välismaa elukoht</label>
+                      <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="row.foreignHome" :disabled="sending"/>
+                    </md-field>
+                  </div>
+
+                  <div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label for="foreign_code">Välisriigi isikukood olemasolul</label>
+                      <md-input type="number" id="foreign_code" name="foreign_code" autocomplete="foreign-home" v-model="row.foreignCode"
+                                :disabled="sending"/>
+                    </md-field>
+                  </div>
                 </div>
               </div>
 
@@ -71,55 +77,40 @@
                   <md-button class="md-accent float-right" v-if="index !== 0" @click="form.users.splice(index, 1);">Kustuta rida</md-button>
                 </div>
               </div>
-
             </div>
           </div>
           <md-button class="md-primary" v-if="form.users.length < 4 && data_about_others" @click="form.users.push({firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null})">Lisa isik <md-icon class="md-size-05">add</md-icon></md-button>
 
           <div v-if="underage() > 0">
-            Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek
-
-            <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
+            <div class="md-layout md-gutter wrapper">
               <md-field>
-                <label for="first-name">Eesnimi</label>
-                <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.parentFirstName"
-                          :disabled="sending"/>
-              </md-field>
-            </div>
-
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label for="last-name">Perekonnanimi</label>
-                <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="form.parentLastName"
-                          :disabled="sending"/>
+                <label>Nõusolek (.bdoc)</label>
+                <md-file v-model="form.files"/>
+                <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
               </md-field>
             </div>
           </div>
-            <div class="md-layout md-gutter">
-              <div class="md-layout md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="idcode">Isikukood</label>
-                    <md-input name="idcode" id="idcode" autocomplete="idcode" v-model="form.parentIdCode" :disabled="sending"/>
-                  </md-field>
-                </div>
-                <div class="md-layout-item md-small-size-100"></div>
-              </div>
-            </div>
-          </div>
+        </md-card-content>
+      </md-card>
+    </div>
 
-          <div class="md-title" v-if="data_about_others">Elukohateatele lisatavad dokumendid</div>
+    <div class="segment-title">Elukohateatele lisatavad dokumendid</div>
+    <div class="segment">
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
+
+        <md-card-content>
           <div class="md-layout md-gutter">
             <md-field>
               <label>Lisatavad failid</label>
               <md-file v-model="form.multiple" multiple/>
             </md-field>
           </div>
+
+          <md-button class="md-raised md-primary" v-on:click="validateAndNext">Esita taotlus</md-button>
         </md-card-content>
       </md-card>
+    </div>
 
-    </form>
   </div>
 </template>
 
@@ -149,21 +140,16 @@
         multiple: null,
         parentIdCode: null,
         parentLastName: null,
-        parentFirstName: null
+        parentFirstName: null,
+        files: null
       },
       userSaved: false,
       sending: false,
       lastUser: null
     }),
     methods: {
-      getValidationClass(fieldName) {
-        const field = this.$v.form[fieldName]
-
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
-        }
+      validateAndNext() {
+        this.$emit('complete');
       },
       underage() {
         return this.form.users.filter(item => item.underage).length;

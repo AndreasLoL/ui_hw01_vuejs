@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="md-layout">
       <div class="md-layout-item md-size-100">
-        <div v-if="!form.expanded" class="float-left">
-          <md-button class="md-primary" @click="form.expanded = true">LISA TÄIENDAVAID ANDMEID  <md-icon class="md-size-05">add</md-icon></md-button>
+        <div class="start-content">
+          <md-checkbox v-model="form.expanded">Soovin lisada täpsustavaid andmeid</md-checkbox>
         </div>
       </div>
     </div>
@@ -76,13 +76,6 @@
               <md-option value="Muu mittetöötav">Muu mittetöötav</md-option>
             </md-select>
           </md-field>
-        </div>
-      </div>
-
-
-      <div class="md-layout">
-        <div class="md-layout-item md-size-100">
-          <md-button class="md-accent float-left" @click="form.expanded = false">Peida täiendavad andmed</md-button>
         </div>
       </div>
     </div>
