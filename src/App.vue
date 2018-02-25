@@ -37,4 +37,26 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+.md-card {
+  box-shadow: none !important;
+}
+.md-icon {
+  &.md-size-05 {
+    width: 12px;
+    min-width: 12px;
+    height: 12px;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}
+
+
+.float-left {
+  float: left;
+}
+
+.start-content {
+  text-align: start;
+  padding-left: 12px;
+}
 </style>

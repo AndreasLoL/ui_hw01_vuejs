@@ -2,18 +2,24 @@
   <div class="hello">
     <div>
       <md-steppers md-vertical md-linear :md-active-step.sync="active">
-        <md-step id="first" md-label="First Step" md-description="Optional" :md-editable="false" :md-done.sync="first">
+        <md-step id="first" md-label="First Step" :md-editable="false" :md-done.sync="first">
           <step-one-container></step-one-container>
           <md-button class="md-raised md-primary" v-on:click="setDone('first', 'second')">Edasi</md-button>
         </md-step>
 
         <md-step id="second" md-label="Second Step" :md-editable="false" :md-done.sync="second">
-          <step-two-container></step-two-container>
+          <step-two-container v-on:others="setData"></step-two-container>
           <md-button class="md-raised md-primary" v-on:click="setDone('second', 'third')">Edasi</md-button>
         </md-step>
 
         <md-step id="third" md-label="Third Step" :md-editable="false" :md-done.sync="third">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+          <step-three-container></step-three-container>
+          <md-button class="md-raised md-primary" v-on:click="setDone('third', 'fourth')">Edasi</md-button>
+        </md-step>
+
+        <md-step id="fourth" md-label="Fourth Step" :md-editable="false" :md-done.sync="fourth">
+          <step-four-container :data_about_others="this.dataAboutOthers"></step-four-container>
+          <md-button class="md-raised md-primary" v-on:click="setDone('fourth', 'fourth')">Esita</md-button>
         </md-step>
       </md-steppers>
     </div>
@@ -22,6 +28,10 @@
 
 <script>
 
+import NewStepOne from "./NewStepOne";
+import NewStepTwo from "./NewStepTwo";
+import NewStepThree from "./NewStepThree";
+import NewStepFour from "./NewStepFour";
 import StepOneContainer from "./StepOneContainer";
 import StepTwoContainer from "./StepTwoContainer";
 export default {
@@ -30,7 +40,9 @@ export default {
     first: false,
     second: false,
     third: false,
-    active: "first"
+    fourth: false,
+    active: "first",
+    dataAboutOthers: false
   }),
   methods: {
     setDone (id, index) {
@@ -40,10 +52,15 @@ export default {
         this.active = index
       }
     },
+    setData(id, data) {
+      this[id] = data;
+    }
   },
   components: {
-    'step-one-container': StepOneContainer,
-    'step-two-container': StepTwoContainer
+    'step-one-container': NewStepOne,
+    'step-two-container': NewStepTwo,
+    'step-three-container': NewStepThree,
+    'step-four-container': NewStepFour
   }
 }
 </script>
