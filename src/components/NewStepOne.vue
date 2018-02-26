@@ -7,7 +7,7 @@
           <div class="wrapper">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-field>
+                <md-field :class="getValidationClass('firstName')">
                   <label for="first-name">Eesnimi</label>
                   <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="form.firstName"/>
                   <span class="md-error" v-if="!$v.form.firstName.required">Eesnimi ei või olla tühi</span>
@@ -17,7 +17,7 @@
               </div>
 
               <div class="md-layout-item md-small-size-100">
-                <md-field>
+                <md-field :class="getValidationClass('lastName')">
                   <label for="last-name">Perekonnanimi</label>
                   <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="form.lastName"/>
                   <span class="md-error" v-if="!$v.form.lastName.required">Perekonnanimi ei või olla tühi</span>
@@ -27,7 +27,7 @@
 
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-field>
+                <md-field :class="getValidationClass('email')">
                   <label for="email">E-post</label>
                   <md-input name="email" id="email" autocomplete="email" v-model.trim="form.email"/>
                   <span class="md-error" v-if="!$v.form.email.required">E-posti aadress ei või olla tühi</span>
@@ -160,7 +160,7 @@
       validateAndNext() {
         this.$v.$touch();
 
-        if (!this.$v.$invalid && /\S/.test(this.form.firstName) && /\S/.test(this.form.lastName) && /\S/.test(this.form.phone)) {
+        if (!this.$v.$invalid) {
           this.$emit('complete');
         }
       },

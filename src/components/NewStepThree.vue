@@ -28,9 +28,10 @@
           <transition name="fade" mode="out-in">
             <div v-if="form.permission === '3' || form.permission === '1'" class="wrapper">
               <div class="md-layout md-gutter">
-                <md-field>
+                <md-field :class="getValidationClass('files')">
                   <label v-if="form.permission === '3'">Ruumi omaniku nõusolek (.bdoc)</label><label v-if="form.permission === '1'">Üürileping</label>
-                  <md-file v-model="files"/>
+                  <md-file v-model="form.files"/>
+                  <span class="md-error" v-if="(form.permission === '3' || form.permission === '1') && !$v.form.files.required">Ühtegi faili pole valitud</span>
                 </md-field>
               </div>
 
@@ -49,9 +50,7 @@
   import {validationMixin} from 'vuelidate'
   import {
     required,
-    email,
-    minLength,
-    maxLength
+
   } from 'vuelidate/lib/validators'
 
   import VueGoogleAutocomplete from 'vue-google-autocomplete'
@@ -67,15 +66,38 @@
         firstName: "",
         lastName: "",
         idcode: "",
-        files: null
+        files: ""
       },
       userSaved: false,
       sending: false,
       lastUser: null
     }),
+    validations: {
+      form: {
+        files: {
+          required
+        }
+      }
+    },
     methods: {
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName];
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
+        }
+      },
       validateAndNext() {
-        this.$emit('complete');
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+          if (this.form.permission === '0' || this.form.permission === '2') {
+            this.$emit('complete');
+          }
+        } else {
+          this.$emit('complete');
+        }
       }
     },
     components: {

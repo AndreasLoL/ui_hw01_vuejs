@@ -11,30 +11,35 @@
                 <hr class="hr-text" :data-content="(index + 1) + '. isik'">
                 <div class="md-layout md-gutter">
                   <div class="md-layout-item md-small-size-100">
-                    <md-field>
+                    <md-field :class="getValidationClass('users[index].firstName')">
                       <label for="first-name">Eesnimi</label>
-                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="row.firstName"
+                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName"
                                 :disabled="sending"/>
+                      <span class="md-error" v-if="!$v.form.users.$each[index].firstName.required">Eesnimi ei tohi olla tühi</span>
                     </md-field>
+
                   </div>
 
 
                   <div class="md-layout-item md-small-size-100">
-                    <md-field>
+                    <md-field :class="getValidationClass('users.$each[index].lastName')">
                       <label for="last-name">Perekonnanimi</label>
-                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="row.lastName"
+                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="row.lastName"
                                 :disabled="sending"/>
+                      <span class="md-error" v-if="!$v.form.users.$each[index].lastName.required">Perekonnanimi ei tohi olla tühi</span>
                     </md-field>
                   </div>
                 </div>
 
                 <div class="md-layout md-gutter">
                   <div class="md-layout-item md-small-size-100">
-                    <md-field>
+                    <md-field :class="getValidationClass('users.$each[index].idcode')">
                       <label for="idcode">Isikukood</label>
-                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model="row.idcode"
+                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.trim="row.idcode"
                                 :disabled="sending"/>
+                      <span class="md-error" v-if="!$v.form.users.$each[index].idcode.validateIdCode">Sisestage korrektne isikukood</span>
                     </md-field>
+
                   </div>
 
                   <div class="md-layout-item md-small-size-100 start-content"></div>
@@ -83,10 +88,11 @@
 
           <div v-if="underage() > 0">
             <div class="md-layout md-gutter wrapper">
-              <md-field>
+              <md-field :class="getValidationClass('files')">
                 <label>Nõusolek (.bdoc)</label>
                 <md-file v-model="form.files"/>
                 <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
+                <span class="md-error" v-if="!$v.form.files.required">Ühtegi faili pole sisestatud</span>
               </md-field>
             </div>
           </div>
@@ -126,6 +132,7 @@
   import VueGoogleAutocomplete from 'vue-google-autocomplete'
   import CustomAutoComplete from "./CustomAutoComplete"
   import AdditionalData from "./AdditionalData"
+  import {validateIdCode} from "../utils/validation";
 
   export default {
     name: 'FormValidation',
@@ -134,22 +141,57 @@
     data: () => ({
       form: {
         users: [
-          {firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null}
+          {firstName: '', lastName: '', idcode: '', underage: false, fromOutside: false, foreignCode: null, foreignHome: null}
         ],
         dataAboutOthers: true,
-        multiple: null,
-        parentIdCode: null,
-        parentLastName: null,
-        parentFirstName: null,
-        files: null
+        multiple: '',
+        files: ''
       },
       userSaved: false,
       sending: false,
       lastUser: null
     }),
+    validations: {
+      form: {
+        users:{
+          $each: {
+            firstName: {
+              required
+            },
+            lastName: {
+              required
+            },
+            idcode: {
+              required,
+              validateIdCode
+            }
+          },
+        },
+        files: {
+          required
+        },
+        multiple: {
+          required
+        }
+      }
+
+    },
     methods: {
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName];
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
+        }
+      },
       validateAndNext() {
-        this.$emit('complete');
+        this.$v.$touch();
+        if (!this.$v.$invalid) {
+          this.$emit('complete');
+
+        }
       },
       underage() {
         return this.form.users.filter(item => item.underage).length;
