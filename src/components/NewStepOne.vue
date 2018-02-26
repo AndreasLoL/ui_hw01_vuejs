@@ -63,25 +63,23 @@
             <div class="start-content">
               <md-checkbox v-model="form.fromOutside">Saabun välismaalt</md-checkbox>
             </div>
-
-            <transition name="fade" mode="out-in">
-              <div class="md-layout md-gutter" v-if="form.fromOutside">
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="foreign_home">Eelmine välismaa elukoht</label>
-                    <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="form.foreignHome"/>
-                  </md-field>
-                </div>
-
-                <div class="md-layout-item md-small-size-100">
-                  <md-field>
-                    <label for="foreign_code">Välisriigi isikukood olemasolul</label>
-                    <md-input type="number" id="foreign_code" name="foreign_code" autocomplete="foreign-home"
-                              v-model="form.foreignCode"/>
-                  </md-field>
-                </div>
+            <div class="md-layout md-gutter" v-if="form.fromOutside">
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('foreignHome')">
+                  <label for="foreign_home">Eelmine välismaa elukoht</label>
+                  <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="form.foreignHome"/>
+                  <span class="md-error" v-if="!$v.form.foreignHome.customRequired">Välismaa elukoha aadress ei tohi tühi olla</span>
+                </md-field>
               </div>
-            </transition>
+
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label for="foreign_code">Välisriigi isikukood olemasolul</label>
+                  <md-input type="number" id="foreign_code" name="foreign_code" autocomplete="foreign-home"
+                            v-model="form.foreignCode"/>
+                </md-field>
+              </div>
+            </div>
 
           </div>
 
@@ -128,6 +126,11 @@
     }),
     validations: {
       form: {
+        foreignHome: {
+          customRequired(value) {
+            return !(this.form.fromOutside && (!value || !value.trim()));
+          }
+        },
         idcode: {
           required,
           validateIdCode

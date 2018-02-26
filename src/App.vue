@@ -162,4 +162,13 @@ input[type="number"] {
     padding-right: 10px;
   }
 }
+
+.custom-error {
+  color: var(--md-theme-default-fieldvariant, #ff1744);
+  font-size: 12px;
+  text-align: start;
+  padding-left: 12px;
+  margin-top: 0;
+  padding-top: 0;
+}
 </style>

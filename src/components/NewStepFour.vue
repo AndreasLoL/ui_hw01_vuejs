@@ -1,6 +1,5 @@
 <template>
   <div>
-    <md-button class="md-raised md-primary" v-on:click="validateAndNext">Esita taotlus</md-button>
     <div class="segment-title" v-if="data_about_others">Teised isikud</div>
     <div class="segment">
       <md-card class="md-layout-item md-size-100 md-small-size-100" v-if="data_about_others">
@@ -11,7 +10,7 @@
                 <hr class="hr-text" :data-content="(index + 1) + '. isik'">
                 <div class="md-layout md-gutter">
                   <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('users[index].firstName')">
+                    <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].firstName) }">
                       <label for="first-name">Eesnimi</label>
                       <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName"
                                 :disabled="sending"/>
@@ -22,7 +21,8 @@
 
 
                   <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('users.$each[index].lastName')">
+                    <md-field
+                        :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].lastName) }">
                       <label for="last-name">Perekonnanimi</label>
                       <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="row.lastName"
                                 :disabled="sending"/>
@@ -33,7 +33,7 @@
 
                 <div class="md-layout md-gutter">
                   <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('users.$each[index].idcode')">
+                    <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].idcode) }">
                       <label for="idcode">Isikukood</label>
                       <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.trim="row.idcode"
                                 :disabled="sending"/>
@@ -177,7 +177,7 @@
 
     },
     methods: {
-      getValidationClass (fieldName) {
+      getValidationClass(fieldName) {
         const field = this.$v.form[fieldName];
 
         if (field) {
@@ -185,6 +185,9 @@
             'md-invalid': field.$invalid && field.$dirty
           }
         }
+      },
+      getNestedValidationClass(nestedObject) {
+        return nestedObject.$invalid && nestedObject.$dirty ? 'md-invalid' : "";
       },
       validateAndNext() {
         this.$v.$touch();

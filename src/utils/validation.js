@@ -1,5 +1,5 @@
 export function validateIdCode(idCode) {
-  if (idCode.length !== 11) {
+  if (idCode === null || idCode.length !== 11) {
     return false;
   }
   if (isNaN(idCode)) {
