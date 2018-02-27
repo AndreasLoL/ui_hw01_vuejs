@@ -50,7 +50,7 @@
                 <md-field :class="getValidationClass('idcode')">
                   <label for="idcode">Isikukood</label>
                   <md-input type="number" name="idcode" id="idcode" autocomplete="idcode" v-model.trim="form.idcode"/>
-                  <span class="md-error" v-if="!$v.form.idcode.validateIdCode">Sisestage korrektne isikukood</span>
+                  <span class="md-error" v-if="!$v.form.idcode.validation">Sisestage korrektne isikukood</span>
                 </md-field>
 
               </div>
@@ -134,7 +134,10 @@
         },
         idcode: {
           required,
-          validateIdCode
+          validation (value) {
+            let validationObj = validateIdCode(value);
+            return validationObj.isValid
+          }
         },
         firstName: {
           required

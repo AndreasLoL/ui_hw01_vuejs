@@ -1,9 +1,12 @@
 export function validateIdCode(idCode) {
+
+
+
   if (idCode === null || idCode.length !== 11) {
-    return false;
+    return {isValid: false, underAge: false};
   }
   if (isNaN(idCode)) {
-    return false;
+    return {isValid: false, underAge: false};
   }
 
   //Sex, use if needed, otherwise comment out.
@@ -38,12 +41,12 @@ export function validateIdCode(idCode) {
   let year = (century + new Number(idCode.substr(1, 2)));
   let month = idCode.substr(3, 2);
   let day = idCode.substr(5, 2);
-  //get birthdate. Comment out if not needed
-  //var bd = new Date(year, month – 1, day);
-  //if ((bd.getMonth() + 1 != month) || (bd.getDate() != day) || (bd.getFullYear() != year)) {
-  //  return false;
-  //}
-  //9
+
+  var bd = new Date(year, month - 1, day);
+  if ((bd.getMonth() + 1 !== month) || (bd.getDate() !== day) || (bd.getFullYear() !== year)) {
+    return {isValid: false, underAge: false}
+  }
+
   let sum = Number(idCode.substr(9, 1));
   //0-8
   for (i = 0; i <= 8; i++) {
@@ -63,8 +66,12 @@ export function validateIdCode(idCode) {
     check = check % 10;
   }
   if (check !== Number(idCode.substr(10, 1))) {
-    return false;
+    return {isValid: false, underAge: false};
   }
-  return true;
+  if (bd <= 2000) {
+  return {isValid: true, underAge: true};
+  } else {
+    return {isValid: true, underAge: false};
+  }
 
 }
