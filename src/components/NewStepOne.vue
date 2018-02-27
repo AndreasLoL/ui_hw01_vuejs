@@ -135,7 +135,7 @@
         idcode: {
           required,
           validation (value) {
-            let validationObj = validateIdCode(value);
+            let validationObj = validateIdCode(this.form.idcode);
             return validationObj.isValid
           }
         },

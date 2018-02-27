@@ -1,7 +1,5 @@
 export function validateIdCode(idCode) {
 
-
-
   if (idCode === null || idCode.length !== 11) {
     return {isValid: false, underAge: false};
   }
@@ -39,11 +37,11 @@ export function validateIdCode(idCode) {
   }
   // check if birthday is a valid date
   let year = (century + new Number(idCode.substr(1, 2)));
-  let month = idCode.substr(3, 2);
-  let day = idCode.substr(5, 2);
+  let month = parseInt(idCode.substr(3, 2));
+  let day = parseInt(idCode.substr(5, 2));
 
-  var bd = new Date(year, month - 1, day);
-  if ((bd.getMonth() + 1 !== month) || (bd.getDate() !== day) || (bd.getFullYear() !== year)) {
+  var bd = new Date(year, month, day);
+  if ((bd.getMonth() !== month) || (bd.getDate() !== day) || (bd.getFullYear() !== year)) {
     return {isValid: false, underAge: false}
   }
 
@@ -68,7 +66,8 @@ export function validateIdCode(idCode) {
   if (check !== Number(idCode.substr(10, 1))) {
     return {isValid: false, underAge: false};
   }
-  if (bd <= 2000) {
+
+  if (bd > 2000) {
   return {isValid: true, underAge: true};
   } else {
     return {isValid: true, underAge: false};
