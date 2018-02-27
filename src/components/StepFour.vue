@@ -79,6 +79,7 @@
               <md-field :class="getValidationClass('files')">
                 <label>Nõusolek (.bdoc)</label>
                 <md-file v-model="form.files"/>
+                <md-button class="md-primary remove-file" v-if="form.files !== ''" @click="form.files = ''">KUSTUTA FAIL</md-button>
                 <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
                 <span class="md-error" v-if="!$v.form.files.customRequired">Ühtegi faili pole sisestatud</span>
               </md-field>
@@ -97,6 +98,7 @@
             <md-field>
               <label>Lisatavad failid</label>
               <md-file v-model="form.multiple" multiple/>
+              <md-button class="md-primary remove-file" v-if="form.multiple !== ''" @click="form.multiple = ''">KUSTUTA FAIL</md-button>
             </md-field>
           </div>
 
