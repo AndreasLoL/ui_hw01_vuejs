@@ -13,7 +13,7 @@
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].firstName) }">
                       <label for="first-name">Eesnimi</label>
                       <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName"/>
-                      <span class="md-error" v-if="!$v.form.users.$each[index].firstName.required">Eesnimi ei tohi olla tühi</span>
+                      <span class="md-error" v-if="!$v.form.users.$each[index].firstName.validation">Eesnimi ei tohi olla tühi</span>
                     </md-field>
 
                   </div>
@@ -34,7 +34,7 @@
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].idcode) }">
                       <label for="idcode">Isikukood</label>
                       <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.lazy="row.idcode"/>
-                      <span class="md-error" v-if="!$v.form.users.$each[index].idcode.validation">Sisestage korrektne isikukood</span>
+                      <span class="md-error" v-if="!$v.form.users.$each[index].validation">Sisestage korrektne isikukood</span>
                     </md-field>
                   </div>
                   <div class="md-layout-item md-small-size-100 start-content"></div>
@@ -151,9 +151,15 @@
             },
             idcode: {
               required,
-              validation (index) {
-                let validationObj = validateIdCode(this.form.users[0].idcode);
-                this.form.existsUnderAge = validationObj.underAge;
+              validation (idcode) {
+                let validationObj = validateIdCode(idcode);
+                if (!this.form.existsUnderAge && validationObj.underAge) {
+                  this.form.existsUnderAge = true;
+                } else if (this.form.existsUnderAge && !validationObj.underAge) {
+                   if (this.form.users.filter(user => validateIdCode(user.idcode).underAge).length === 0) {
+                     this.form.existsUnderAge = false;
+                   }
+                }
                 return validationObj.isValid
               }
 
@@ -162,7 +168,7 @@
         },
         files: {
           customRequired() {
-            if (this.form.users.filter(user => user.underage).length > 0) {
+            if (this.form.existsUnderAge) {
               return this.form.files !== "";
             }
 

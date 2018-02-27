@@ -1,5 +1,4 @@
 export function validateIdCode(idCode) {
-
   if (idCode === null || idCode.length !== 11) {
     return {isValid: false, underAge: false};
   }
