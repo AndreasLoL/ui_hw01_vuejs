@@ -32,7 +32,7 @@ export function validateIdCode(idCode) {
     }
     default:
     {
-      return false;
+      return  {isValid: false, underAge: false};
     }
   }
   // check if birthday is a valid date
@@ -67,7 +67,7 @@ export function validateIdCode(idCode) {
     return {isValid: false, underAge: false};
   }
 
-  if (bd > 2000) {
+  if (bd.getFullYear() > 2000) {
   return {isValid: true, underAge: true};
   } else {
     return {isValid: true, underAge: false};

@@ -33,19 +33,11 @@
                   <div class="md-layout-item md-small-size-100">
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].idcode) }">
                       <label for="idcode">Isikukood</label>
-                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.trim="row.idcode"/>
-                      <span class="md-error" v-if="!$v.form.users.$each[index].idcode.validateIdCode">Sisestage korrektne isikukood</span>
+                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.lazy="row.idcode"/>
+                      <span class="md-error" v-if="!$v.form.users.$each[index].idcode.validation">Sisestage korrektne isikukood</span>
                     </md-field>
-
                   </div>
-
                   <div class="md-layout-item md-small-size-100 start-content"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="start-content">
-                  <md-checkbox v-model="row.underage">Alaealine</md-checkbox>
                 </div>
               </div>
 
@@ -82,7 +74,7 @@
           </div>
           <md-button class="md-primary" v-if="form.users.length < 4 && data_about_others" @click="form.users.push({firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null})">Lisa isik <md-icon class="md-size-05">add</md-icon></md-button>
 
-          <div v-if="underage() > 0">
+          <div v-if="form.existsUnderAge">
             <div class="md-layout md-gutter wrapper">
               <md-field :class="getValidationClass('files')">
                 <label>Nõusolek (.bdoc)</label>
@@ -142,8 +134,10 @@
         ],
         dataAboutOthers: true,
         multiple: '',
-        files: ''
-      }
+        files: '',
+        existsUnderAge: false
+      },
+      sending: false,
     }),
     validations: {
       form: {
@@ -157,7 +151,12 @@
             },
             idcode: {
               required,
-              validateIdCode
+              validation (index) {
+                let validationObj = validateIdCode(this.form.users[0].idcode);
+                this.form.existsUnderAge = validationObj.underAge;
+                return validationObj.isValid
+              }
+
             }
           },
         },
@@ -194,7 +193,7 @@
       },
       underage() {
         return this.form.users.filter(item => item.underage).length;
-      }
+      },
     },
     components: {
       AdditionalData, 'custom-auto-complete': CustomAutoComplete,
