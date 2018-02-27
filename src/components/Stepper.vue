@@ -3,6 +3,7 @@
       <h1 class="title">ELUKOHATEADE</h1>
       <md-step id="first" md-label="Üldandmed" :md-description="first ? 'Klõpsi siia, et muuta' : ''" :md-editable="true" :md-done.sync="first">
         <step-one-container v-on:complete="setDone('first', 'second')"></step-one-container>
+           <md-button class="md-raised md-primary" @click=" setDone('first', 'third')">MINU TAOTLUSED</md-button>
       </md-step>
 
       <md-step id="second" md-label="Aadressid" :md-description="second ? 'Klõpsi siia, et muuta' : ''" :md-editable="true" :md-done.sync="second">

@@ -184,4 +184,14 @@ input[type="number"] {
   padding-top: 0;
 }
 
+.md-field .md-primary.remove-file {
+  position: absolute;
+  right: 0;
+  top: 6px;
+
+  @media (max-width: 768px) {
+    top: 45px;
+  }
+}
+
 </style>

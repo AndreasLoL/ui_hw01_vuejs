@@ -31,6 +31,7 @@
                 <md-field :class="getValidationClass('files')">
                   <label v-if="form.permission === '3'">Ruumi omaniku nõusolek (.bdoc)</label><label v-if="form.permission === '1'">Üürileping</label>
                   <md-file v-model="form.files"/>
+                  <md-button class="md-primary remove-file" v-if="form.files !== ''" @click="form.files = ''">KUSTUTA FAIL</md-button>
                   <span class="md-error" v-if="(form.permission === '3' || form.permission === '1') && !$v.form.files.required">Ühtegi faili pole valitud</span>
                 </md-field>
               </div>
