@@ -1,14 +1,15 @@
 <template>
     <md-steppers class="background" md-vertical md-linear :md-active-step.sync="active">
-      <md-step id="first" md-label="Üldandmed" :md-editable="true" :md-done.sync="first">
+      <h1 class="title">ELUKOHATEADE</h1>
+      <md-step id="first" md-label="Üldandmed" :md-description="first ? 'Klõpsi siia, et muuta' : ''" :md-editable="true" :md-done.sync="first">
         <step-one-container v-on:complete="setDone('first', 'second')"></step-one-container>
       </md-step>
 
-      <md-step id="second" md-label="Aadressid" :md-editable="true" :md-done.sync="second">
+      <md-step id="second" md-label="Aadressid" :md-description="second ? 'Klõpsi siia, et muuta' : ''" :md-editable="true" :md-done.sync="second">
         <step-two-container v-on:others="setData" v-on:complete="setDone('second', 'third')"></step-two-container>
       </md-step>
 
-      <md-step id="third" md-label="Õigused" :md-editable="true" :md-done.sync="third">
+      <md-step id="third" md-label="Õigused" :md-description="third ? 'Klõpsi siia, et muuta' : ''" :md-editable="true" :md-done.sync="third">
         <step-three-container v-on:complete="setDone('third', 'fourth')"></step-three-container>
       </md-step>
 
@@ -20,14 +21,12 @@
 
 <script>
 
-import NewStepOne from "./NewStepOne";
-import NewStepTwo from "./NewStepTwo";
-import NewStepThree from "./NewStepThree";
-import NewStepFour from "./NewStepFour";
-import StepOneContainer from "./StepOneContainer";
-import StepTwoContainer from "./StepTwoContainer";
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
+import StepThree from "./StepThree";
+import StepFour from "./StepFour";
 export default {
-  name: 'HelloWorld',
+  name: 'Stepper',
   data: () => ({
     first: false,
     second: false,
@@ -39,11 +38,9 @@ export default {
   methods: {
     setDone (id, index) {
       this[id] = true;
-
       if (index) {
         this.active = index
       }
-      console.log(id)
       if (id === "fourth") {
         this.$emit('complete');
       }
@@ -53,10 +50,10 @@ export default {
     }
   },
   components: {
-    'step-one-container': NewStepOne,
-    'step-two-container': NewStepTwo,
-    'step-three-container': NewStepThree,
-    'step-four-container': NewStepFour
+    'step-one-container': StepOne,
+    'step-two-container': StepTwo,
+    'step-three-container': StepThree,
+    'step-four-container': StepFour
   }
 }
 </script>
@@ -77,6 +74,19 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.title {
+  position: relative;
+  line-height: 0.9;
+  margin-bottom: 0px;
+  margin-left: 25px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
 </style>

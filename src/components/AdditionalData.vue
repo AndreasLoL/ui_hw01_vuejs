@@ -95,7 +95,7 @@
   import CustomAutoComplete from "./CustomAutoComplete"
 
   export default {
-    name: 'FormValidation',
+    name: 'AdditionalData',
     props: ["mail_and_phone"],
     mixins: [validationMixin],
     data: () => ({

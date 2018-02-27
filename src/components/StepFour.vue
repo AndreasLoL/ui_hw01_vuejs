@@ -124,7 +124,7 @@
   import {validateIdCode} from "../utils/validation";
 
   export default {
-    name: 'FormValidation',
+    name: 'StepFour',
     mixins: [validationMixin],
     props: ["data_about_others"],
     data: () => ({
@@ -136,8 +136,7 @@
         multiple: '',
         files: '',
         existsUnderAge: false
-      },
-      sending: false,
+      }
     }),
     validations: {
       form: {

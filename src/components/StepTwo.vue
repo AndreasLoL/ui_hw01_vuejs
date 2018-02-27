@@ -79,7 +79,7 @@
   import CustomAutoComplete from "./CustomAutoComplete"
 
   export default {
-    name: 'FormValidation',
+    name: 'StepTwo',
     mixins: [validationMixin],
     data: () => ({
       form: {
@@ -89,10 +89,7 @@
         dateFrom: new Date(),
         dateTo: new Date(),
         checkBoxError: false
-      },
-      userSaved: false,
-      sending: false,
-      lastUser: null
+      }
     }),
     methods: {
       validateAndNext() {

@@ -111,7 +111,7 @@
   import {validateIdCode} from "../utils/validation";
 
   export default {
-    name: 'FormValidation',
+    name: 'StepOne',
     mixins: [validationMixin],
     data: () => ({
       form: {

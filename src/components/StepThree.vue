@@ -57,7 +57,7 @@
   import CustomAutoComplete from "./CustomAutoComplete"
 
   export default {
-    name: 'FormValidation',
+    name: 'StepThree',
     mixins: [validationMixin],
     data: () => ({
       form: {
@@ -68,9 +68,6 @@
         idcode: "",
         files: ""
       },
-      userSaved: false,
-      sending: false,
-      lastUser: null
     }),
     validations: {
       form: {
