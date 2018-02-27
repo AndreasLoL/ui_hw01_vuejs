@@ -75,7 +75,7 @@
                 </div>
               </div>
 
-              <div><additional-data :email_and_phone="true"></additional-data></div>
+              <div><additional-data :mail_and_phone="true"></additional-data></div>
 
               <div class="md-layout">
                 <div class="md-layout-item md-size-100">
@@ -92,7 +92,7 @@
                 <label>Nõusolek (.bdoc)</label>
                 <md-file v-model="form.files"/>
                 <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
-                <span class="md-error" v-if="!$v.form.files.required">Ühtegi faili pole sisestatud</span>
+                <span class="md-error" v-if="!$v.form.files.customRequired">Ühtegi faili pole sisestatud</span>
               </md-field>
             </div>
           </div>
@@ -114,6 +114,7 @@
 
           <md-button class="md-raised md-primary" v-on:click="validateAndNext">Esita taotlus</md-button>
         </md-card-content>
+
       </md-card>
     </div>
 
@@ -146,10 +147,7 @@
         dataAboutOthers: true,
         multiple: '',
         files: ''
-      },
-      userSaved: false,
-      sending: false,
-      lastUser: null
+      }
     }),
     validations: {
       form: {
@@ -168,10 +166,13 @@
           },
         },
         files: {
-          required
-        },
-        multiple: {
-          required
+          customRequired() {
+            if (this.form.users.filter(user => user.underage).length > 0) {
+              return this.form.files !== "";
+            }
+
+            return true;
+          }
         }
       }
 
@@ -191,9 +192,8 @@
       },
       validateAndNext() {
         this.$v.$touch();
-        if (!this.$v.$invalid) {
+        if (!this.data_about_others || !this.$v.$invalid) {
           this.$emit('complete');
-
         }
       },
       underage() {

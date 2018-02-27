@@ -89,6 +89,7 @@
           <md-button class="md-raised md-primary" v-on:click="validateAndNext">Edasi</md-button>
 
         </md-card-content>
+
       </md-card>
     </div>
   </div>

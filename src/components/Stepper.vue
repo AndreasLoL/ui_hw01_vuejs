@@ -43,6 +43,10 @@ export default {
       if (index) {
         this.active = index
       }
+      console.log(id)
+      if (id === "fourth") {
+        this.$emit('complete');
+      }
     },
     setData(id, data) {
       this[id] = data;
