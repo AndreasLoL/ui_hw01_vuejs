@@ -12,8 +12,7 @@
                   <div class="md-layout-item md-small-size-100">
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].firstName) }">
                       <label for="first-name">Eesnimi</label>
-                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName"
-                                :disabled="sending"/>
+                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName"/>
                       <span class="md-error" v-if="!$v.form.users.$each[index].firstName.required">Eesnimi ei tohi olla tühi</span>
                     </md-field>
 
@@ -24,8 +23,7 @@
                     <md-field
                         :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].lastName) }">
                       <label for="last-name">Perekonnanimi</label>
-                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="row.lastName"
-                                :disabled="sending"/>
+                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="row.lastName"/>
                       <span class="md-error" v-if="!$v.form.users.$each[index].lastName.required">Perekonnanimi ei tohi olla tühi</span>
                     </md-field>
                   </div>
@@ -35,8 +33,7 @@
                   <div class="md-layout-item md-small-size-100">
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].idcode) }">
                       <label for="idcode">Isikukood</label>
-                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.trim="row.idcode"
-                                :disabled="sending"/>
+                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.trim="row.idcode"/>
                       <span class="md-error" v-if="!$v.form.users.$each[index].idcode.validateIdCode">Sisestage korrektne isikukood</span>
                     </md-field>
 
@@ -61,15 +58,14 @@
                   <div class="md-layout-item md-small-size-100">
                     <md-field>
                       <label for="foreign_home">Eelmine välismaa elukoht</label>
-                      <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="row.foreignHome" :disabled="sending"/>
+                      <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="row.foreignHome"/>
                     </md-field>
                   </div>
 
                   <div class="md-layout-item md-small-size-100">
                     <md-field>
                       <label for="foreign_code">Välisriigi isikukood olemasolul</label>
-                      <md-input type="number" id="foreign_code" name="foreign_code" autocomplete="foreign-home" v-model="row.foreignCode"
-                                :disabled="sending"/>
+                      <md-input type="number" id="foreign_code" name="foreign_code" autocomplete="foreign-home" v-model="row.foreignCode"/>
                     </md-field>
                   </div>
                 </div>
