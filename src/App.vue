@@ -6,12 +6,14 @@
 </template>
 <script>
 
-import Stepper from './components/Stepper'
 import Vue from 'vue'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
+import Stepper from './components/Stepper'
 import SuccessScreen from './components/SuccessScreen'
+
+import './scss/App.scss'
 
 Vue.use(VueMaterial);
 export default {
@@ -31,167 +33,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-#app {
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: black;
-}
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-.md-card {
-  box-shadow: none !important;
-  overflow: hidden;
-}
-.md-icon {
-  &.md-size-05 {
-    width: 12px;
-    min-width: 12px;
-    height: 12px;
-    font-size: 12px;
-    margin-bottom: 2px;
-  }
-}
-
-
-.float-left {
-  float: left;
-}
-
-.start-content {
-  text-align: start;
-  padding-left: 12px;
-  @media (max-width: 944px) {
-    padding-left: 6px !important;
-  }
-
-  @media (max-width: 600px) {
-    padding-left: 0px !important;
-  }
-}
-
-.md-steppers.md-theme-default.background {
-  background-color: #fafafa;
-  margin: 0 auto;
-  max-width: 1000px;
-}
-
-.segment {
-  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, .15);
-  background-color: #fff;
-}
-
-.segment:not(:last-child) {
-  margin-bottom: 20px;
-}
-
-.segment-title {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: 1.4px;
-  color: rgba(0, 0, 0, .54);
-  text-transform: uppercase;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-}
-
-.wrapper {
-  margin-bottom: 20px;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: max-height 1s;
-  max-height: 500px;
-}
-.fade-enter /* .fade-leave-active below version 2.1.8 */ {
-  max-height: 0px;
-}
-
-.fade-leave-to {
-  transition: max-height 0s;
-}
-
-.md-divider {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.md-steppers.md-theme-default .md-stepper-header.md-done .md-stepper-number {
-  background-color: #4CAF50;
-}
-
-.hr-text {
-  line-height: 1em;
-  position: relative;
-  outline: 0;
-  border: 0;
-  color: #448aff;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
-  height: 1.5em;
-  opacity: 1;
-  &:before {
-    content: '';
-    background-color: #818078;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-  }
-  &:after {
-    content: attr(data-content);
-    position: relative;
-    display: inline-block;
-    padding: 0 .5em;
-    line-height: 1.5em;
-    background-color: white;
-  }
-}
-
-.md-steppers.md-vertical .md-stepper:after {
-  @media (max-width: 490px) {
-    width: 0px;
-  }
-}
-
-.md-steppers.md-vertical .md-stepper-content {
-  @media (max-width: 490px) {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
-.custom-error {
-  color: var(--md-theme-default-fieldvariant, #ff1744);
-  font-size: 12px;
-  text-align: start;
-  padding-left: 12px;
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.md-field .md-primary.remove-file {
-  position: absolute;
-  right: 0;
-  top: 6px;
-
-  @media (max-width: 768px) {
-    top: 45px;
-  }
-}
-
-</style>
