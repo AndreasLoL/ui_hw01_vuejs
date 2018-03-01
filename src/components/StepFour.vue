@@ -12,7 +12,7 @@
                   <div class="md-layout-item md-small-size-100">
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].firstName) }">
                       <label for="first-name">Eesnimi</label>
-                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName"/>
+                      <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="row.firstName" @input="delayTouch($v.form.users.$each[index].firstName)"/>
                       <span class="md-error" v-if="!$v.form.users.$each[index].firstName.validation">Eesnimi ei tohi olla tühi</span>
                     </md-field>
 
@@ -23,7 +23,7 @@
                     <md-field
                         :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].lastName) }">
                       <label for="last-name">Perekonnanimi</label>
-                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="row.lastName"/>
+                      <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="row.lastName" @input="delayTouch($v.form.users.$each[index].lastName)"/>
                       <span class="md-error" v-if="!$v.form.users.$each[index].lastName.required">Perekonnanimi ei tohi olla tühi</span>
                     </md-field>
                   </div>
@@ -33,7 +33,7 @@
                   <div class="md-layout-item md-small-size-100">
                     <md-field :class="{'md-invalid': getNestedValidationClass($v.form.users.$each[index].idcode) }">
                       <label for="idcode">Isikukood</label>
-                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.lazy="row.idcode"/>
+                      <md-input name="idcode" id="idcode" autocomplete="id-code" v-model.lazy="row.idcode" @input="delayTouch($v.form.users.$each[index].idcode)"/>
                       <span class="md-error" v-if="!$v.form.users.$each[index].validation">Sisestage korrektne isikukood</span>
                     </md-field>
                   </div>
@@ -124,7 +124,7 @@
   import CustomAutoComplete from "./CustomAutoComplete"
   import AdditionalData from "./AdditionalData"
   import {validateIdCode} from "../utils/validation";
-
+  const touchMap = new WeakMap()
   export default {
     name: 'StepFour',
     mixins: [validationMixin],
@@ -191,6 +191,13 @@
       },
       getNestedValidationClass(nestedObject) {
         return nestedObject.$invalid && nestedObject.$dirty ? 'md-invalid' : "";
+      },
+      delayTouch ($v) {
+        $v.$reset()
+        if (touchMap.has($v)) {
+          clearTimeout(touchMap.get($v))
+        }
+        touchMap.set($v, setTimeout($v.$touch, 1000))
       },
       validateAndNext() {
         this.$v.$touch();
