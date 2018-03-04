@@ -12,7 +12,10 @@
 
           <md-list>
             <md-list-item>
-              <md-radio v-model="form.permission" value="0">Olen ruumi (kaas)omanik</md-radio>
+              <md-radio v-model="form.permission" value="0">Olen ruumi omanik</md-radio>
+            </md-list-item>
+            <md-list-item>
+              <md-radio v-model="form.permission" value="4">Olen ruumi kaasomanik</md-radio>
             </md-list-item>
             <md-list-item>
               <md-radio v-model="form.permission" value="1">Lisan üürilepingu</md-radio>
@@ -26,13 +29,14 @@
           </md-list>
 
           <transition name="fade" mode="out-in">
-            <div v-if="form.permission === '3' || form.permission === '1'" class="wrapper">
+            <div v-if="form.permission === '3' || form.permission === '1' || form.permission === '4'" class="wrapper">
               <div class="md-layout md-gutter">
                 <md-field :class="getValidationClass('files')">
                   <label v-if="form.permission === '3'">Ruumi omaniku nõusolek (.bdoc)</label><label v-if="form.permission === '1'">Üürileping</label>
+                  <label v-if="form.permission === '4'">Ruumi kaasomanike nõusolek (.bdoc)</label>
                   <md-file v-model="form.files"/>
                   <md-button class="md-primary remove-file" v-if="form.files !== ''" @click="form.files = ''">KUSTUTA FAIL</md-button>
-                  <span class="md-error" v-if="(form.permission === '3' || form.permission === '1') && !$v.form.files.required">Ühtegi faili pole valitud</span>
+                  <span class="md-error" v-if="(form.permission === '3' || form.permission === '1' || form.permission === '4') && !$v.form.files.required">Ühtegi faili pole valitud</span>
                 </md-field>
               </div>
 
@@ -75,6 +79,11 @@
         files: {
           required
         }
+      }
+    },
+    watch: {
+      "$v.$invalid": function (before, now) {
+        this.$emit('error', 'third', now ? null : "yes");
       }
     },
     methods: {

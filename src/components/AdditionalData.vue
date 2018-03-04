@@ -31,6 +31,7 @@
           <md-field>
             <label for="nationality">Rahvus</label>
             <md-input name="nationality" id="nationality" autocomplete="text" v-model="form.nationality" :disabled="sending"/>
+            <span class="md-helper-text">Rahvus, millega kõige tihedamini seob</span>
           </md-field>
         </div>
 
@@ -39,6 +40,7 @@
             <label for="mother_tongue">Emakeel</label>
             <md-input type="text" id="mother_tongue" name="mother_tongue" autocomplete="mother_tongue" v-model="form.motherTongue"
                       :disabled="sending"/>
+            <span class="md-helper-text">Esimese keelena omandatud ja mida kõige paremini valdab</span>
           </md-field>
         </div>
       </div>

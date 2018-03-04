@@ -43,20 +43,21 @@
               </div>
             </div>
 
+            <span class="md-helper-text">Kuupäevad täita juhul, kui aadressi kehtivuse alguse kuupäev on tulevikus või kui on teada, millal kehtivus lõppeb</span>
+
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-datepicker v-model="form.dateFrom">
+                <md-datepicker v-model="form.dateFrom" :md-disabled-dates="disabledDatesFrom">
                   <label>Kehtib alates</label>
                 </md-datepicker>
               </div>
 
               <div class="md-layout-item md-small-size-100">
-                <md-datepicker v-model="form.dateTo">
+                <md-datepicker v-model="form.dateTo" :md-disabled-dates="disabledDatesTo">
                   <label>Kuni</label>
                 </md-datepicker>
               </div>
             </div>
-            <span class="md-helper-text">Täita juhul, kui aadressi kehtivuse alguse kuupäev on tulevikus või kui on teada, millal kehtivus lõppeb</span>
           </div>
 
           <md-button class="md-raised md-primary" v-on:click="validateAndNext">Edasi</md-button>
@@ -86,12 +87,31 @@
         dataAboutMe: false,
         dataAboutOthers: false,
         liveElsewhere: false,
-        dateFrom: new Date(),
-        dateTo: new Date(),
-        checkBoxError: false
+        dateFrom: null,
+        dateTo: null,
+        checkBoxError: false,
       }
     }),
+    watch: {
+      "$v.$invalid": function (before, now) {
+        this.$emit('error', 'second', now ? null : "yes");
+      }
+    },
     methods: {
+      disabledDatesFrom(date) {
+        if (this.form.dateTo !== null) {
+          return this.form.dateTo < date;
+        }
+
+        return false
+      },
+      disabledDatesTo(date) {
+        if (this.form.dateFrom !== null) {
+          return this.form.dateFrom > date;
+        }
+
+        return false
+      },
       validateAndNext() {
         if (this.$refs.auto1.validate()) {
           if (this.form.liveElsewhere && !this.$refs.auto2.validate()) {

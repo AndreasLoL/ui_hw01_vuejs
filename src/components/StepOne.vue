@@ -66,9 +66,9 @@
             <div class="md-layout md-gutter" v-if="form.fromOutside">
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('foreignHome')">
-                  <label for="foreign_home">Eelmine välismaa elukoht</label>
+                  <label for="foreign_home">Välismaa elukoha riik</label>
                   <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="form.foreignHome" @input="delayTouch($v.form.foreignHome)"/>
-                  <span class="md-error" v-if="!$v.form.foreignHome.customRequired">Välismaa elukoha aadress ei tohi tühi olla</span>
+                  <span class="md-error" v-if="!$v.form.foreignHome.customRequired">Välismaa elukoha riik ei tohi tühi olla</span>
                 </md-field>
               </div>
 
@@ -129,7 +129,7 @@
       form: {
         foreignHome: {
           customRequired(value) {
-            return !(this.form.fromOutside && (!value || !value.trim()));
+            return !(this.form.fromOutside && this.$v.$dirty && (!value || !value.trim()));
           }
         },
         idcode: {
@@ -154,6 +154,11 @@
         },
       }
     },
+    watch: {
+      "$v.$invalid": function (before, now) {
+        this.$emit('error', 'first', now ? null : "yes");
+      }
+    },
     methods: {
       getValidationClass (fieldName) {
         const field = this.$v.form[fieldName];
@@ -169,6 +174,8 @@
 
         if (!this.$v.$invalid) {
           this.$emit('complete');
+        } else {
+          this.$emit('error', 'first', 'yes');
         }
       },
       delayTouch ($v) {

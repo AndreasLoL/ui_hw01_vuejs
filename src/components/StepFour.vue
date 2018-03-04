@@ -49,7 +49,7 @@
                 <div class="md-layout md-gutter wrapper" v-if="row.fromOutside">
                   <div class="md-layout-item md-small-size-100">
                     <md-field>
-                      <label for="foreign_home">Eelmine välismaa elukoht</label>
+                      <label for="foreign_home">Välismaa elukoha riik</label>
                       <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="row.foreignHome"/>
                     </md-field>
                   </div>
@@ -75,12 +75,12 @@
           <md-button class="md-primary" v-if="form.users.length < 4 && data_about_others" @click="form.users.push({firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null})">Lisa isik <md-icon class="md-size-05">add</md-icon></md-button>
 
           <div v-if="form.existsUnderAge">
+            <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
             <div class="md-layout md-gutter wrapper">
               <md-field :class="getValidationClass('files')">
                 <label>Nõusolek (.bdoc)</label>
                 <md-file v-model="form.files"/>
                 <md-button class="md-primary remove-file" v-if="form.files !== ''" @click="form.files = ''">KUSTUTA FAIL</md-button>
-                <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
                 <span class="md-error" v-if="!$v.form.files.customRequired">Ühtegi faili pole sisestatud</span>
               </md-field>
             </div>
@@ -179,6 +179,11 @@
       }
 
     },
+    watch: {
+      "$v.$invalid": function (before, now) {
+        this.$emit('error', 'fourth', now ? null : "yes");
+      }
+    },
     methods: {
       getValidationClass(fieldName) {
         const field = this.$v.form[fieldName];
@@ -203,6 +208,8 @@
         this.$v.$touch();
         if (!this.data_about_others || !this.$v.$invalid) {
           this.$emit('complete');
+        } else {
+          this.$emit('error', 'fourth', 'yes');
         }
       },
       underage() {
