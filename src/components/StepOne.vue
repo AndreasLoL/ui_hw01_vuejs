@@ -41,6 +41,7 @@
                   <label for="phone">Telefon</label>
                   <md-input type="number" id="phone" name="phone" autocomplete="phone" v-model.trim="form.phone" @input="delayTouch($v.form.phone)"/>
                   <span class="md-error" v-if="!$v.form.phone.required">Telefoni number ei tohi olla tühi</span>
+                  <span class="md-error" v-if="!$v.form.phone.maxLength || !$v.form.phone.minLength">Telefoni number ei ole sobiva pikkusega</span>
                 </md-field>
               </div>
             </div>
@@ -154,7 +155,9 @@
           email
         },
         phone: {
-          required
+          required,
+          minLength: minLength(7),
+          maxLength: maxLength(15),
         },
       }
     },
