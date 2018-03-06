@@ -76,7 +76,7 @@
               </div>
             </div>
           </div>
-          <md-button class="md-primary" v-if="form.users.length < 4 && data_about_others" @click="form.users.push({firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null})">Lisa isik <md-icon class="md-size-05">add</md-icon></md-button>
+          <md-button class="md-primary" v-if="form.users.length < 20 && data_about_others" @click="form.users.push({firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null})">Lisa isik <md-icon class="md-size-05">add</md-icon></md-button>
 
           <div v-if="form.existsUnderAge">
             <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
