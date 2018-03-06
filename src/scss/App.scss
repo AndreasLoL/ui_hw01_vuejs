@@ -110,7 +110,7 @@ input[type="number"] {
   position: relative;
   outline: 0;
   border: 0;
-  color: #448aff;
+  color: #333;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
@@ -164,5 +164,16 @@ input[type="number"] {
 
   @media (max-width: 768px) {
     top: 45px;
+  }
+}
+
+.md-helper-text.external {
+  display: block;
+  text-align: start;
+  margin-top: 10px;
+
+  @media (max-width: 944px) {
+    font-size: 14px;
+    color: rgba(0,0,0,0.54);
   }
 }

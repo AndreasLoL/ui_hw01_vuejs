@@ -42,8 +42,12 @@
               </div>
 
               <div>
-                <div class="start-content">
-                  <md-checkbox v-model="row.fromOutside">Saabub välismaalt</md-checkbox>
+                <div class="md-layout md-gutter">
+                  <div class="md-layout-item">
+                    <div class="start-content">
+                      <md-checkbox v-model="row.fromOutside">Saabub välismaalt</md-checkbox>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="md-layout md-gutter wrapper" v-if="row.fromOutside">

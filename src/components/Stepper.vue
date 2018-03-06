@@ -39,6 +39,9 @@ export default {
     active: "first",
     dataAboutOthers: false
   }),
+  mounted(){
+    console.log(this);
+  },
   methods: {
     setDone (id, index) {
       this[id] = true;

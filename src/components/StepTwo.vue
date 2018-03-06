@@ -43,7 +43,11 @@
               </div>
             </div>
 
-            <span class="md-helper-text">Kuupäevad täita juhul, kui aadressi kehtivuse alguse kuupäev on tulevikus või kui on teada, millal kehtivus lõppeb</span>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item">
+                <span class="md-helper-text external">Kuupäevad täita juhul, kui aadressi kehtivuse alguse kuupäev on tulevikus või kui on teada, millal kehtivus lõppeb</span>
+              </div>
+            </div>
 
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
@@ -69,14 +73,7 @@
 
 <script>
   import {validationMixin} from 'vuelidate'
-  import {
-    required,
-    email,
-    minLength,
-    maxLength
-  } from 'vuelidate/lib/validators'
 
-  import VueGoogleAutocomplete from 'vue-google-autocomplete'
   import CustomAutoComplete from "./CustomAutoComplete"
 
   export default {

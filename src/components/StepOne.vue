@@ -59,9 +59,13 @@
             </div>
           </div>
 
-          <div class="wrapper">
-            <div class="start-content">
-              <md-checkbox v-model="form.fromOutside">Saabun välismaalt</md-checkbox>
+          <div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item">
+                <div class="start-content">
+                  <md-checkbox v-model="form.fromOutside">Saabun välismaalt</md-checkbox>
+                </div>
+              </div>
             </div>
             <div class="md-layout md-gutter" v-if="form.fromOutside">
               <div class="md-layout-item md-small-size-100">

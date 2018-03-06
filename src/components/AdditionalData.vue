@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="md-layout">
+    <div class="md-layout md-gutter">
       <div class="md-layout-item md-size-100">
         <div class="start-content">
           <md-checkbox v-model="form.expanded">Soovin lisada täpsustavaid andmeid</md-checkbox>
@@ -13,15 +13,14 @@
         <div class="md-layout-item md-small-size-100">
           <md-field>
             <label for="email">E-post</label>
-            <md-input name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending"/>
+            <md-input name="email" id="email" type="email" autocomplete="email" v-model="form.email"/>
           </md-field>
         </div>
 
         <div class="md-layout-item md-small-size-100">
           <md-field>
             <label for="phone">Telefon</label>
-            <md-input type="number" id="phone" name="phone" autocomplete="age" v-model="form.phone"
-                      :disabled="sending"/>
+            <md-input type="number" id="phone" name="phone" autocomplete="age" v-model="form.phone"/>
           </md-field>
         </div>
       </div>
@@ -30,16 +29,15 @@
         <div class="md-layout-item md-small-size-100">
           <md-field>
             <label for="nationality">Rahvus</label>
-            <md-input name="nationality" id="nationality" autocomplete="text" v-model="form.nationality" :disabled="sending"/>
-            <span class="md-helper-text">Rahvus, millega kõige tihedamini seob</span>
+            <md-input name="nationality" id="nationality" autocomplete="text" v-model="form.nationality"/>
+            <span class="md-helper-text">Rahvus, millega isik end kõige tihedamini seob</span>
           </md-field>
         </div>
 
         <div class="md-layout-item md-small-size-100">
           <md-field>
             <label for="mother_tongue">Emakeel</label>
-            <md-input type="text" id="mother_tongue" name="mother_tongue" autocomplete="mother_tongue" v-model="form.motherTongue"
-                      :disabled="sending"/>
+            <md-input type="text" id="mother_tongue" name="mother_tongue" autocomplete="mother_tongue" v-model="form.motherTongue"/>
             <span class="md-helper-text">Esimese keelena omandatud ja mida kõige paremini valdab</span>
           </md-field>
         </div>
@@ -49,10 +47,10 @@
         <div class="md-layout-item md-small-size-100">
           <md-field>
             <label for="education">Kõrgeim haridustase</label>
-            <md-select v-model="form.education" name="education" id="education" :disabled="sending">
-              <md-option value="Doktor või võrdsustatud haridus">Doktor või võrdsustatud haridus</md-option>
-              <md-option value="Magister või võrdsustatud haridus">Magister või võrdsustatud haridus</md-option>
-              <md-option value="Bakalaureus või võrdsustatud haridus">Bakalaureus või võrdsustatud haridus</md-option>
+            <md-select v-model="form.education" name="education" id="education">
+              <md-option value="Doktor/võrdsustatud haridus">Doktor/võrdsustatud haridus</md-option>
+              <md-option value="Magister/võrdsustatud haridus">Magister/võrdsustatud haridus</md-option>
+              <md-option value="Bakalaureus/võrdsustatud haridus">Bakalaureus/võrdsustatud haridus</md-option>
               <md-option value="Keskeri- ja tehnikumiharidus">Keskeri- ja tehnikumiharidus</md-option>
               <md-option value="Kutseharidus keskhariduse baasil">Kutseharidus keskhariduse baasil</md-option>
               <md-option value="Keskharidus">Keskharidus</md-option>
@@ -67,7 +65,7 @@
         <div class="md-layout-item md-small-size-100">
           <md-field>
             <label for="social_status">Sotsiaal-majanduslik seisund</label>
-            <md-select v-model="form.socialStatus" name="social_status" id="social_status" :disabled="sending">
+            <md-select v-model="form.socialStatus" name="social_status" id="social_status">
               <md-option value="Töötav">Töötav</md-option>
               <md-option value="Kodune">Kodune</md-option>
               <md-option value="Töötu või tööd otsiv">Töötu või tööd otsiv</md-option>
@@ -87,14 +85,8 @@
 <script>
   import {validationMixin} from 'vuelidate'
   import {
-    required,
     email,
-    minLength,
-    maxLength
   } from 'vuelidate/lib/validators'
-
-  import VueGoogleAutocomplete from 'vue-google-autocomplete'
-  import CustomAutoComplete from "./CustomAutoComplete"
 
   export default {
     name: 'AdditionalData',
@@ -107,12 +99,9 @@
         education: null,
         socialStatus: null,
         expanded: false,
-        phone: false,
-        email: false
-      },
-      userSaved: false,
-      sending: false,
-      lastUser: null
+        phone: null,
+        email: null
+      }
     }),
     methods: {
     }

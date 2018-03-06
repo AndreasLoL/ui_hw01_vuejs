@@ -90,6 +90,7 @@
     opacity: 0;
     position: relative;
     line-height: 0.9;
+    margin-top: 0;
 
     @media (max-width: 980px) {
       margin-bottom: 10px;
