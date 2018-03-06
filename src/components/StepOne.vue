@@ -9,7 +9,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('firstName')">
                   <label for="first-name">Eesnimi</label>
-                  <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="form.firstName" @input="delayTouch($v.form.firstName)"/>
+                  <md-input name="first-name" id="first-name" autocomplete="given-name" v-model.trim="form.firstName" @input="delayTouch($v.form.firstName)" required/>
                   <span class="md-error" v-if="!$v.form.firstName.required">Eesnimi ei või olla tühi</span>
                 </md-field>
 
@@ -19,7 +19,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('lastName')">
                   <label for="last-name">Perekonnanimi</label>
-                  <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="form.lastName" @input="delayTouch($v.form.lastName)"/>
+                  <md-input name="last-name" id="last-name" autocomplete="family-name" v-model.trim="form.lastName" @input="delayTouch($v.form.lastName)" required/>
                   <span class="md-error" v-if="!$v.form.lastName.required">Perekonnanimi ei või olla tühi</span>
                 </md-field>
               </div>
@@ -29,7 +29,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('email')">
                   <label for="email">E-post</label>
-                  <md-input name="email" id="email" autocomplete="email" v-model.trim="form.email" @input="delayTouch($v.form.email)"/>
+                  <md-input name="email" id="email" autocomplete="email" v-model.trim="form.email" @input="delayTouch($v.form.email)" required/>
                   <span class="md-error" v-if="!$v.form.email.required">E-posti aadress ei või olla tühi</span>
                   <span class="md-error" v-if="!$v.form.email.email">Sisestage korrektne e-posti aadress</span>
                 </md-field>
@@ -39,7 +39,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('phone')">
                   <label for="phone">Telefon</label>
-                  <md-input type="number" id="phone" name="phone" autocomplete="phone" v-model.trim="form.phone" @input="delayTouch($v.form.phone)"/>
+                  <md-input type="number" id="phone" name="phone" autocomplete="phone" v-model.trim="form.phone" @input="delayTouch($v.form.phone)" required/>
                   <span class="md-error" v-if="!$v.form.phone.required">Telefoni number ei tohi olla tühi</span>
                   <span class="md-error" v-if="!$v.form.phone.maxLength || !$v.form.phone.minLength">Telefoni number ei ole sobiva pikkusega</span>
                 </md-field>
@@ -50,7 +50,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('idcode')">
                   <label for="idcode">Isikukood</label>
-                  <md-input type="number" name="idcode" id="idcode" autocomplete="idcode" v-model.trim="form.idcode" @input="delayTouch($v.form.idcode)"/>
+                  <md-input type="number" name="idcode" id="idcode" autocomplete="idcode" v-model.trim="form.idcode" @input="delayTouch($v.form.idcode)" required/>
                   <span class="md-error" v-if="!$v.form.idcode.validation">Sisestage korrektne isikukood</span>
                 </md-field>
 
@@ -72,7 +72,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('foreignHome')">
                   <label for="foreign_home">Välismaa elukoha riik</label>
-                  <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model="form.foreignHome" @input="delayTouch($v.form.foreignHome)"/>
+                  <md-input name="foreign home" id="foreign_home" autocomplete="text" v-model.trim="form.foreignHome" @input="delayTouch($v.form.foreignHome)" required/>
                   <span class="md-error" v-if="!$v.form.foreignHome.customRequired">Välismaa elukoha riik ei tohi tühi olla</span>
                 </md-field>
               </div>
