@@ -79,11 +79,15 @@
           <md-button class="md-primary" v-if="form.users.length < 20 && data_about_others" @click="form.users.push({firstName: null, lastName: null, idcode: null, underage: false, fromOutside: false, foreignCode: null, foreignHome: null})">Lisa isik <md-icon class="md-size-05">add</md-icon></md-button>
 
           <div v-if="form.existsUnderAge">
-            <span class="md-helper-text">Alaealise <span v-if="underage() === 1">lapse</span><span v-if="underage() !== 1">laste</span> teise hooldusõigusliku vanema nõusolek</span>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item">
+                <span class="md-helper-text external"><span v-if="underage() === 1">Alaealise lapse</span><span v-if="underage() !== 1">Alaealiste laste</span> teise hooldusõigusliku vanema nõusolek</span>
+              </div>
+            </div>
             <div class="md-layout md-gutter wrapper">
               <md-field :class="getValidationClass('files')">
                 <label>Nõusolek (.bdoc)</label>
-                <md-file v-model="form.files"/>
+                <md-file v-model="form.files" accept=".bdoc"/>
                 <md-button class="md-primary remove-file" v-if="form.files !== ''" @click="form.files = ''">KUSTUTA FAIL</md-button>
                 <span class="md-error" v-if="!$v.form.files.customRequired">Ühtegi faili pole sisestatud</span>
               </md-field>
@@ -128,7 +132,7 @@
   import CustomAutoComplete from "./CustomAutoComplete"
   import AdditionalData from "./AdditionalData"
   import {validateIdCode} from "../utils/validation";
-  const touchMap = new WeakMap()
+  const touchMap = new WeakMap();
   export default {
     name: 'StepFour',
     mixins: [validationMixin],
@@ -217,7 +221,7 @@
         }
       },
       underage() {
-        return this.form.users.filter(item => item.underage).length;
+        return this.form.users.filter(user => validateIdCode(user.idcode).underAge).length;
       },
     },
     components: {
