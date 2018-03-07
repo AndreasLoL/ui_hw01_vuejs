@@ -43,14 +43,6 @@ input[type="number"] {
 
 .start-content {
   text-align: start;
-  padding-left: 12px;
-  @media (max-width: 944px) {
-    padding-left: 6px !important;
-  }
-
-  @media (max-width: 600px) {
-    padding-left: 0px !important;
-  }
 }
 
 .md-steppers.md-theme-default.background {
@@ -181,5 +173,14 @@ input[type="number"] {
 .md-list-item-content {
   @media (max-width: 400px) {
     padding-left: 0;
+  }
+}
+
+.required {
+  margin-left: 25px;
+  margin-bottom: 0px;
+
+  .red {
+    color: darkred;
   }
 }

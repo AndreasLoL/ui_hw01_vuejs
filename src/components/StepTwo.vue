@@ -12,12 +12,16 @@
             </div>
           </div>
 
-          <div class="start-content">
-            <md-checkbox v-model="form.dataAboutMe" v-on:change="form.checkBoxError = false">Esitan uue elukoha enda kohta</md-checkbox>
+          <div class="start-content md-layout md-gutter">
+            <div class="md-layout-item">
+              <md-checkbox v-model="form.dataAboutMe" v-on:change="form.checkBoxError = false">Esitan uue elukoha enda kohta</md-checkbox>
+            </div>
           </div>
 
-          <div class="start-content">
-            <md-checkbox v-model="form.dataAboutOthers" v-on:change="dataAboutOthersChange">Esitan uue elukoha teis(te)e kohta</md-checkbox>
+          <div class="start-content md-layout md-gutter">
+            <div class="md-layout-item">
+              <md-checkbox v-model="form.dataAboutOthers" v-on:change="dataAboutOthersChange">Esitan uue elukoha teis(te)e kohta</md-checkbox>
+            </div>
           </div>
 
           <p v-if="form.checkBoxError" class="custom-error">Vähemalt üks kahest peab olema valitud</p>
@@ -32,8 +36,10 @@
     <div class="segment">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-content>
-          <div class="start-content wrapper">
-            <md-checkbox v-model="form.liveElsewhere">Elan ka mujal kui eelnevalt nimetatud elukohas</md-checkbox>
+          <div class="start-content md-layout md-gutter wrapper">
+            <div class="md-layout-item">
+              <md-checkbox v-model="form.liveElsewhere">Elan ka mujal kui eelnevalt nimetatud elukohas</md-checkbox>
+            </div>
           </div>
 
           <div v-if="form.liveElsewhere" class="wrapper">

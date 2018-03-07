@@ -86,8 +86,8 @@
             </div>
             <div class="md-layout md-gutter wrapper">
               <md-field :class="getValidationClass('files')">
-                <label>Nõusolek (.bdoc)</label>
-                <md-file v-model="form.files" accept=".bdoc"/>
+                <label v-if="underage() === 1">Nõusolek (.bdoc)</label><label v-if="underage() !== 1">Nõusolekud (.bdoc)</label>
+                <md-file v-model="form.files" accept=".bdoc" multiple/>
                 <md-button class="md-primary remove-file" v-if="form.files !== ''" @click="form.files = ''">KUSTUTA FAIL</md-button>
                 <span class="md-error" v-if="!$v.form.files.customRequired">Ühtegi faili pole sisestatud</span>
               </md-field>

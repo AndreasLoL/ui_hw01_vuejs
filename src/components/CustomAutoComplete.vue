@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-element">
-    <md-autocomplete v-model="address" :md-options="this.addresses" @md-opened="getAddresses" @md-changed="getAddresses" @md-selected="selected" :class="{'md-invalid': hasError}">
+    <md-autocomplete required v-model="address" :md-options="this.addresses" @md-opened="getAddresses" @md-changed="getAddresses" @md-selected="selected" :class="{'md-invalid': hasError}">
       <label>{{ label }}</label>
 
       <template slot="md-autocomplete-item" slot-scope="{ item, term }">

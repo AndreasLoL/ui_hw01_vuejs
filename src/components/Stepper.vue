@@ -1,6 +1,7 @@
 <template>
     <md-steppers class="background" md-vertical md-linear :md-active-step.sync="active">
       <h1 class="title">ELUKOHATEADE</h1>
+      <p class="required"><span class="red">*</span> Kohustuslikud väljad</p>
       <md-step id="first" md-label="Üldandmed" :md-description="first ? 'Klõpsi siia, et muuta' : ''" :md-editable="true" :md-done.sync="first" :md-error="firstError">
         <step-one-container v-on:complete="setDone('first', 'second')"  v-on:error="setError"></step-one-container>
       </md-step>
